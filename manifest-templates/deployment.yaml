@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}
+  namespace: ${NAMESPACE}
+  labels:
+    app: ${APP_NAME}
+    backstage.io/kubernetes-id: ${APP_NAME}
+    environment: ${NAMESPACE}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+  template:
+    metadata:
+      labels:
+        app: ${APP_NAME}
+        backstage.io/kubernetes-id: ${APP_NAME}
+        environment: ${NAMESPACE}
+    spec:
+      containers:
+        - name: ${APP_NAME}
+          image: ${DOCKER_IMAGE}
+          ports:
+            - containerPort: ${APP_PORT}
+          env:
+            - name: APP_ENV
+              value: "${NAMESPACE}"
+            - name: URL_PREFIX
+              value: /${APP_NAME}-${NAMESPACE}
+          resources:
+            requests:
+              memory: "384Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
