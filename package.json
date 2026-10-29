@@ -1,0 +1,10 @@
+{
+  "name": "my-docker-app",
+  "version": "1.0.0",
+  "description": "Simple Docker learning app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "[ ! -f server.js ] || { PORT=0 timeout 3 node server.js; [ $? -eq 124 ]; }"
+  }
+}
